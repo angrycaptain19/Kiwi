@@ -40,14 +40,12 @@ class KiwiTCMS(IssueTrackerType):
         if not bug:
             return {}
 
-        result = {
+        return {
             "title": bug.summary,
             "description": render_to_string(
                 "include/bug_details.html", {"object": bug}
             ),
         }
-
-        return result
 
     def add_testexecution_to_issue(self, executions, issue_url):
         """

@@ -63,8 +63,7 @@ class BitBucketAPI:
         base_url = "https://api.bitbucket.org"
         workspace = splitted_url[1]
         repository = splitted_url[2]
-        endpoint_url = f"{base_url}/{api_version}/repositories/{workspace}/{repository}"
-        return endpoint_url
+        return f"{base_url}/{api_version}/repositories/{workspace}/{repository}"
 
 
 class BitBucketThread(IntegrationThread):

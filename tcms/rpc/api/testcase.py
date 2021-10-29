@@ -360,13 +360,10 @@ def sortkeys(query=None):
     if query is None:
         query = {}
 
-    result = {}
-    for record in TestCasePlan.objects.filter(**query):
-        # NOTE: convert to str() otherwise we get:
-        # Unable to serialize result as valid XML: dictionary key must be string
-        result[str(record.case_id)] = record.sortkey
-
-    return result
+    return {
+        str(record.case_id): record.sortkey
+        for record in TestCasePlan.objects.filter(**query)
+    }
 
 
 @permissions_required("testcases.change_testcase")
@@ -558,8 +555,7 @@ def comments(case_id):
         :raises TestCase.DoesNotExist: if object specified by PK is missing
     """
     case = TestCase.objects.get(pk=case_id)
-    result = []
-    for comment in helpers.comments.get_comments(case):
-        result.append(model_to_dict(comment))
-
-    return result
+    return [
+        model_to_dict(comment)
+        for comment in helpers.comments.get_comments(case)
+    ]

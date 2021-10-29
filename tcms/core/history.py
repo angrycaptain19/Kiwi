@@ -17,17 +17,15 @@ def diff_objects(old_instance, new_instance, fields):
     full_diff = []
 
     for field in fields:
-        field_diff = []
         old_value = getattr(old_instance, field.attname)
         new_value = getattr(new_instance, field.attname)
-        for line in difflib.unified_diff(
+        field_diff = [line for line in difflib.unified_diff(
             str(old_value).split("\n"),
             str(new_value).split("\n"),
             fromfile=field.attname,
             tofile=field.attname,
             lineterm="",
-        ):
-            field_diff.append(line)
+        )]
         full_diff.extend(field_diff)
 
     return "\n".join(full_diff)
@@ -121,14 +119,12 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
         return safe(f"<pre>{obj.history_change_reason}</pre>")
 
     def get_readonly_fields(self, request, obj=None):
-        # make all fields readonly
-        readonly_fields = list(
+        return list(
             set(
                 [field.name for field in self.opts.local_fields]
                 + [field.name for field in self.opts.local_many_to_many]
             )
         )
-        return readonly_fields
 
     def response_change(self, request, obj):
         super().response_change(request, obj)

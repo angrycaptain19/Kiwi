@@ -91,9 +91,11 @@ class Bugzilla(base.IssueTrackerType):
         First attempt *1-click bug report* and if that fails fall back
         to a URL with some of the values pre-defined as query parameters!
         """
-        args = {}
-        args["product"] = execution.run.plan.product.name
-        args["component"] = self.get_case_components(execution.case)
+        args = {
+            'product': execution.run.plan.product.name,
+            'component': self.get_case_components(execution.case),
+        }
+
         args["version"] = execution.run.plan.product_version.value
 
         args["short_desc"] = f"Test case failure: {execution.case.summary}"

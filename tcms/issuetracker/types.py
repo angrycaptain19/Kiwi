@@ -51,11 +51,7 @@ class JIRA(IssueTrackerType):
     it_class = jira_integration.JiraThread
 
     def _rpc_connection(self):
-        if hasattr(settings, "JIRA_OPTIONS"):
-            options = settings.JIRA_OPTIONS
-        else:
-            options = None
-
+        options = settings.JIRA_OPTIONS if hasattr(settings, "JIRA_OPTIONS") else None
         return jira.JIRA(
             self.bug_system.base_url,
             basic_auth=(self.bug_system.api_username, self.bug_system.api_password),

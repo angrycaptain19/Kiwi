@@ -91,8 +91,7 @@ class IssueTrackerType:
         Returns a string that contains comma separated list of components
         bound to a given testcase
         """
-        case_components = ", ".join(case.component.values_list("name", flat=True))
-        return case_components
+        return ", ".join(case.component.values_list("name", flat=True))
 
     def details(self, url):  # pylint: disable=no-self-use
         """
@@ -110,13 +109,13 @@ class IssueTrackerType:
 
         return result
 
-    def _report_comment(self, execution):  # pylint: disable=no-self-use
+    def _report_comment(self, execution):    # pylint: disable=no-self-use
         """
         Returns the comment which is used in the original defect report.
         """
         txt = execution.case.get_text_with_version(execution.case_text_version)
 
-        comment = f"""Filed from execution {execution.get_full_url()}
+        return f"""Filed from execution {execution.get_full_url()}
 
 **Product:**
 {execution.run.plan.product.name}
@@ -135,7 +134,6 @@ class IssueTrackerType:
 
 
 """
-        return comment
 
     def report_issue_from_testexecution(self, execution, user):
         """

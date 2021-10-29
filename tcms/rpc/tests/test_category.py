@@ -33,10 +33,7 @@ class TestCategory(APITestCase):
         )
         self.assertIsNotNone(categories)
 
-        category_names = []
-        for category in categories:
-            category_names.append(category["name"])
-
+        category_names = [category["name"] for category in categories]
         self.assertEqual(3, len(category_names))
         self.assertIn("--default--", category_names)
         self.assertIn("auto", category_names)

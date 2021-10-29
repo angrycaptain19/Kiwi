@@ -68,9 +68,7 @@ class NewTestRunView(View):
 
         if form.is_valid():
             test_run = form.save()
-            loop = 1
-
-            for case in form.cleaned_data["case"]:
+            for loop, case in enumerate(form.cleaned_data["case"], start=1):
                 try:
                     tcp = TestCasePlan.objects.get(
                         plan=form.cleaned_data["plan"], case=case
@@ -84,8 +82,6 @@ class NewTestRunView(View):
                     sortkey=sortkey,
                     assignee=form.cleaned_data["default_tester"],
                 )
-                loop += 1
-
             return HttpResponseRedirect(
                 reverse(
                     "testruns-get",

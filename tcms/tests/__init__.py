@@ -63,10 +63,7 @@ def remove_perm_from_user(user, perm):
 
 
 def create_request_user(username=None, password=None):
-    if username:
-        user = UserFactory(username=username)
-    else:
-        user = UserFactory()
+    user = UserFactory(username=username) if username else UserFactory()
     if password:
         user.set_password(password)
     else:
@@ -226,19 +223,14 @@ class BaseCaseRun(BasePlanCase):
             default_tester=cls.tester,
         )
 
-        executions = []
-        for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1):
-            executions.append(
-                TestExecutionFactory(
+        executions = [TestExecutionFactory(
                     assignee=cls.tester,
                     run=cls.test_run,
                     build=cls.build,
                     status=cls.status_idle,
                     case=case,
                     sortkey=i * 10,
-                )
-            )
-
+                ) for i, case in enumerate((cls.case_1, cls.case_2, cls.case_3), 1)]
         # used in other tests as well
         cls.execution_1 = executions[0]
         cls.execution_2 = executions[1]

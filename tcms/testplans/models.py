@@ -163,9 +163,7 @@ class TestPlan(TreeNode, UrlMixin):
         plan = TestPlan.objects.with_tree_fields().get(pk=self.pk)
 
         tree_root = plan.ancestors(include_self=True).first()
-        result = tree_root.descendants(include_self=True)
-
-        return result
+        return tree_root.descendants(include_self=True)
 
     def tree_view_html(self):
         """
@@ -207,11 +205,7 @@ class TestPlan(TreeNode, UrlMixin):
                     </div><!-- end-subtree -->
                 </div> <!-- end-node -->"""
 
-            # render the current node
-            active_class = ""
-            if test_plan.pk == self.pk:
-                active_class = "active"
-
+            active_class = "active" if test_plan.pk == self.pk else ""
             result += f"""
                 <!-- begin-node -->
                 <div class="list-group-item {active_class}" style="border: none">

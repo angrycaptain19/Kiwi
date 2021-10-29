@@ -25,10 +25,9 @@ class NewPlanForm(forms.ModelForm):
 
 
 # note: these fields can't change during runtime !
-_email_settings_fields = []  # pylint: disable=invalid-name
-for field in TestPlanEmailSettings._meta.fields:
-    _email_settings_fields.append(field.name)
-
+_email_settings_fields = [
+    field.name for field in TestPlanEmailSettings._meta.fields
+]
 
 # for usage in CreateView, UpdateView
 PlanNotifyFormSet = inlineformset_factory(  # pylint: disable=invalid-name

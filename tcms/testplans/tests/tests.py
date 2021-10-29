@@ -51,7 +51,7 @@ class BasePlanTest(test.TestCase):
             )
 
         # also add a few PROPOSED TestCases
-        for _i in range(3):
+        for _ in range(3):
             TestCaseFactory(plan=[cls.test_plan])
 
         cls.plan_id = cls.test_plan.pk

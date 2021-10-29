@@ -18,13 +18,11 @@ class MultipleEmailField(EmailField):
         if not isinstance(value, str):
             raise ValidationError(f"'{value}' is not a valid string value.")
 
-        result = []
-
-        for item in value.split(self.delimiter):
-            if item.strip() != "":
-                result.append(item.strip())
-
-        return result
+        return [
+            item.strip()
+            for item in value.split(self.delimiter)
+            if item.strip() != ""
+        ]
 
     def clean(self, value):
         email_addrs = self.to_python(value)

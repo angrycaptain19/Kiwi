@@ -49,11 +49,7 @@ class SimilarStringChecker(BaseChecker):
         used in the string to avoid unwanted data to add up to
         the similarity between the strings.
         """
-        cleaned = ""
-        for char in text:
-            if char not in string.punctuation:
-                cleaned += char
-        return cleaned
+        return "".join(char for char in text if char not in string.punctuation)
 
     def check_similar_string(self, translation_string):
         cleaned_translation_string = self.clean_string(translation_string)

@@ -75,7 +75,7 @@ class TestBitBucketIntegration(APITestCase):
         # wait until comments have been refreshed b/c this seem to happen async
         initial_comments_length = initial_comments["size"]
         current_comments_length = initial_comments_length
-        while current_comments_length != initial_comments_length + 1:
+        while current_comments_length != current_comments_length + 1:
             comments = self.integration.rpc.get_comments(self.existing_bug_id)
             current_comments_length = comments["size"]
 

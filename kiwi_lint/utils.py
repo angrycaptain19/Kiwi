@@ -10,12 +10,8 @@ def is_api_function(node):
     if not node.decorators:
         return False
 
-    for decorator in node.decorators.nodes:
-        if (
+    return any((
             isinstance(decorator, astroid.Call)
             and isinstance(decorator.func, astroid.Name)
             and decorator.func.name == "rpc_method"
-        ):
-            return True
-
-    return False
+        ) for decorator in node.decorators.nodes)

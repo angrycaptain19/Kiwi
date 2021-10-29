@@ -492,9 +492,7 @@ class TestTree(APITestCase):
 
         self.assertEqual(4, len(result))
 
-        pks = []
-        for test_plan in result:
-            pks.append(test_plan["id"])
+        pks = [test_plan["id"] for test_plan in result]
         self.assertEqual(
             pks, [self.plan_1.pk, self.plan_2.pk, self.plan_4.pk, self.plan_3.pk]
         )

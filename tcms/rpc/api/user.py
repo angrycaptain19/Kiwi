@@ -80,7 +80,7 @@ def filter(query=None, **kwargs):  # pylint: disable=redefined-builtin
 @rpc_method(name="User.update")
 def update(
     user_id, values, **kwargs
-):  # pylint: disable=missing-api-permissions-required
+):    # pylint: disable=missing-api-permissions-required
     """
     .. function:: RPC User.update(user_id, values)
 
@@ -107,11 +107,7 @@ def update(
             Changing the password for another user via RPC is not allowed!
     """
     request = kwargs.get(REQUEST_KEY)
-    if user_id:
-        user_being_updated = User.objects.get(pk=user_id)
-    else:
-        user_being_updated = request.user
-
+    user_being_updated = User.objects.get(pk=user_id) if user_id else request.user
     editable_fields = ("first_name", "last_name", "email", "password")
     can_change_user = request.user.has_perm("auth.change_user")
 

@@ -110,10 +110,8 @@ class TestGitHubIntegration(APITestCase):
         last_comment = None
         current_comment_count = 0
         while current_comment_count <= initial_comments_count:
-            current_comment_count = 0
             # .get_comments() returns an iterator
-            for comment in issue.get_comments():
-                current_comment_count += 1
+            for current_comment_count, comment in enumerate(issue.get_comments()):
                 last_comment = comment
 
             time.sleep(1)

@@ -41,10 +41,7 @@ class MissingPermissionsChecker(checkers.BaseChecker):
         if not self.inside_views_module:
             return
 
-        arg0 = None
-        if node.args.args:
-            arg0 = node.args.args[0]
-
+        arg0 = node.args.args[0] if node.args.args else None
         if arg0 and arg0.name != "request":
             return
         # this function is a confirmed view so start checking

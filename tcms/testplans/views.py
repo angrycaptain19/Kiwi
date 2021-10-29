@@ -112,11 +112,9 @@ class SearchTestPlanView(TemplateView):
         form = SearchPlanForm(self.request.GET)
         form.populate(product_id=self.request.GET.get("product"))
 
-        context_data = {
+        return {
             "form": form,
         }
-
-        return context_data
 
 
 @method_decorator(

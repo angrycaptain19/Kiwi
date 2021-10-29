@@ -63,10 +63,11 @@ def notify_admins(sender, **kwargs):
     if kwargs.get("raw", False):
         return
 
-    admin_emails = set()
-    # super-users can approve others
-    for super_user in get_user_model().objects.filter(is_superuser=True):
-        admin_emails.add(super_user.email)
+    admin_emails = {
+        super_user.email
+        for super_user in get_user_model().objects.filter(is_superuser=True)
+    }
+
     # site admins should be able to do so as well
     for _name, email in settings.ADMINS:
         admin_emails.add(email)

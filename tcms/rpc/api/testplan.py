@@ -326,17 +326,10 @@ def tree(plan_id):
         :raises TestPlan.DoesNotExit: if object specified by PK is missing
     """
     plan = TestPlan.objects.get(pk=plan_id)
-    result = []
-
-    for record in plan.tree_as_list():
-        result.append(
-            {
+    return [{
                 "id": record.pk,
                 "name": record.name,
                 "parent_id": record.parent_id,
                 "tree_depth": record.tree_depth,
                 "url": record.get_full_url(),
-            }
-        )
-
-    return result
+            } for record in plan.tree_as_list()]

@@ -111,10 +111,7 @@ class TestFilter(APITestCase):
         self.assertIsInstance(result, list)
         self.assertEqual(len(result), 2)
 
-        pks = []
-        for item in result:
-            pks.append(item["pk"])
-
+        pks = [item["pk"] for item in result]
         self.assertNotIn(self.bug.pk, pks)
         self.assertIn(self.another_bug.pk, pks)
         self.assertIn(self.yet_another_bug.pk, pks)

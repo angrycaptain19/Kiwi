@@ -204,14 +204,11 @@ def test_case_health(query=None):
         all_test_executions.filter(status__weight__lt=0)
     )
 
-    data = {}
-    for value in test_executions:
-        data[value["case_id"]] = {
+    data = {value["case_id"]: {
             "case_id": value["case_id"],
             "case_summary": value["case__summary"],
             "count": {"all": value["count"], "fail": 0},
-        }
-
+        } for value in test_executions}
     _count_test_executions(data, failed_test_executions, "fail")
 
     # remove all with 100% success rate, because they are not interesting

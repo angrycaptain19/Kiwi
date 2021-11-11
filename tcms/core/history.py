@@ -119,14 +119,12 @@ class ReadOnlyHistoryAdmin(SimpleHistoryAdmin):
         return safe(f"<pre>{obj.history_change_reason}</pre>")
 
     def get_readonly_fields(self, request, obj=None):
-        # make all fields readonly
-        readonly_fields = list(
+        return list(
             set(
                 [field.name for field in self.opts.local_fields]
                 + [field.name for field in self.opts.local_many_to_many]
             )
         )
-        return readonly_fields
 
     def response_change(self, request, obj):
         super().response_change(request, obj)
